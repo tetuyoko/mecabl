@@ -1,0 +1,4 @@
+---
+- include: logrotate.yml tags=logrotate
+- include: mecab.yml tags=mecab
+- include: nginx.yml tags=nginx

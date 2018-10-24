@@ -1,0 +1,12 @@
+- name: Configure rotates
+  become: true
+  template: src=logrotate.d/{{item}}.j2 dest=/etc/logrotate.d/{{item}} group=root owner=root force=yes
+  with_items:
+    - crawler
+    - unicorn
+    - newrelic_agent
+    - nginx
+
+- name: Reload config
+  become: true
+  command: /usr/sbin/logrotate /etc/logrotate.conf

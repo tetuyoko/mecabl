@@ -1,0 +1,8 @@
+work_dir: /home/ubuntu
+repos_dir: "{{ work_dir }}/mecab-ipadic-neologd"
+log_directory: /var/www/mecabl/shared/log
+branch: master
+webserver_name: mecabl.io
+unicorn_pid: /var/www/mecabl/shared/tmp/pids/unicorn.pid
+admin_user: root
+admin_group: root

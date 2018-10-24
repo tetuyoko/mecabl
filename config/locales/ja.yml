@@ -1,0 +1,6 @@
+ja:
+  hello: "Hello world"
+  classifier:
+    categories:
+      notbl: notBL
+      bl: BL

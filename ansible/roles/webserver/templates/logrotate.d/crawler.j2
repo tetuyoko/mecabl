@@ -1,0 +1,12 @@
+{{ log_directory }}/crawler.log {
+  daily
+  rotate 20
+  compress
+  delaycompress
+  notifempty
+  missingok
+  copytruncate
+  create 0640 {{ admin_user }} {{ admin_group }}
+  su  {{ admin_user }} {{ admin_group }}
+  dateext
+}

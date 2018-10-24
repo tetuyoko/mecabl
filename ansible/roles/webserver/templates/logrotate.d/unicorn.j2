@@ -1,0 +1,16 @@
+{{ log_directory }}/unicor*.log {
+  daily
+  rotate 20
+  compress
+  delaycompress
+  missingok
+  notifempty
+  copytruncate
+  dateext
+  create 0640 {{ admin_user }} {{ admin_group }}
+  su {{ admin_user }} {{ admin_group }}
+  lastaction
+    pid={{ unicorn_pid }}
+    test -s $pid && kill -USR1 "$(cat $pid)"
+  endscript
+}

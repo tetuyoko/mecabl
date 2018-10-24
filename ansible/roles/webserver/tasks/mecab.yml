@@ -1,0 +1,27 @@
+---
+- name: apt upgrade
+  become: true
+  action: apt update_cache=yes upgrade=yes
+
+- name: install dependencies
+  become: true
+  apt: name={{ item }}
+  with_items:
+    - mecab
+    - libmecab-dev
+    - mecab-ipadic-utf8
+    - git
+    - make
+    - curl
+    - xz-utils
+
+- name: clone ipadic-neologd
+  git: repo=git@github.com:neologd/mecab-ipadic-neologd.git
+       depth=1
+       dest={{ repos_dir }} version={{ branch }} accept_hostkey=yes
+
+  # 途中でyes入れる
+  #- name: update ipadic-neologd
+  #- command: ./bin/install-mecab-ipadic-neologd -n
+  #- args:
+  #-   chdir: "{{ repos_dir }}"

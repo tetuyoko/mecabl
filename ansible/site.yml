@@ -1,0 +1,7 @@
+---
+- name: Install Mecabl MiddleWare
+  hosts: all
+  vars_files:
+    - vars/defaults.yml
+  roles:
+    - webserver

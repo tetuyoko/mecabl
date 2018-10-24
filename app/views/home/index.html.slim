@@ -1,0 +1,72 @@
+script src="/js/jquery-2.2.2.min.js"
+script src="/js/addfeed.js"
+link rel="stylesheet" href="/css/home.css"
+
+section
+  image src="/image/logo.png" width="160px"
+  h3
+    | MecaBL is 何？
+  p
+    |
+      Web上のニュースを感情でカテゴライズするためのモデル学習用サイトです(MUGENUP社内専用)。
+  h3
+    | 名前の由来
+  p 
+    | MecaBL = ML(機械学習) + mecab(形態素解析エンジン) + BL(男性同士の恋愛)
+
+  div
+    a href ="/debug/classifier/train"
+      | >>> 機械学習を開始する
+  h3
+    | 使い方1: 学習する
+  ol
+    li
+     | 機械学習を開始する をクリック
+    li
+     | Web上の記事がランダムに表示されます
+    li
+     | Web上の記事の印象 を選択します
+    li
+     | それを何回か繰り返します
+    li
+     | モデルの学習が進むと、記事を自動的にカテゴライズできるようになります!
+  
+  div
+    a href ="/debug/classifier/train" target="_blank"
+      | >>> 機械学習を開始する
+
+  h3
+    | 使い方2:  表示されるサイトを追加する
+  p 
+    | 何かオススメのサイトがあれば以下から追加お願いしますm(__)m
+    | サイトはなんでも良いですが
+    |  アニメ、ゲーム、マンガ、ラノベ、小説等サブカル系でだと尚良です。
+
+  form#add-from method="POST" action="/feeds"
+    input type="text_field" name="url"
+    input type="submit" value="追加"
+    #result
+
+  p 
+    | 例: https://ichi-up.net/
+
+
+  h3
+    | 仕組み
+  p
+    | 登録したサイトを一定時間毎にクローリングし、記事を取得します。
+    br
+    | 記事の内容から、タグを自動生成します。
+    br
+    | 記事の印象を指定すると、その記事のタグを印象と関連づけてモデルに学習させています
+
+  h3
+    | 管理用リンク
+
+  div
+    a href ="/admin/feeds" target="_blank"
+      | >>> 登録されているサイトを確認する
+  div
+    a href ="/debug/classifier" target="_blank"
+      | >>> 学習済みモデルの内容物を確認する
+  br

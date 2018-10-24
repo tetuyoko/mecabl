@@ -1,0 +1,27 @@
+- name: apt upgrade
+  become: true
+  action: apt update_cache=yes upgrade=yes
+
+- name: Install nginx
+  become: true
+  apt: pkg=nginx state=latest
+
+- name: Remove the default app
+  become: true
+  command: rm -rf /etc/nginx/sites-enabled/default
+
+- name: Remove the app's symlink, if exists
+  become: true
+  command: rm -rf /etc/nginx/sites-enabled/mecabl
+
+- name: Configure nginx for the app
+  become: true
+  template: src=nginx/etc_nginx_sites-available_mecabl.conf.j2 dest=/etc/nginx/sites-available/mecabl group=root owner=root force=yes
+
+- name: Enable the app
+  become: true
+  command: ln -s /etc/nginx/sites-available/mecabl /etc/nginx/sites-enabled/mecabl
+
+- name: Restart nginx
+  become: true
+  action: service name=nginx state=restarted

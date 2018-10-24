@@ -1,0 +1,12 @@
+{{ log_directory }}/newrelic_agent.log {
+  weekly
+  missingok
+  rotate 20
+  compress
+  delaycompress
+  dateext
+  notifempty
+  sharedscripts
+  create 0640 {{ admin_user }} {{ admin_group }}
+  su {{ admin_user }} {{ admin_group }}
+}

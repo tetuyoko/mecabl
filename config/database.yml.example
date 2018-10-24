@@ -1,0 +1,28 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+
+development:
+  <<: *default
+  database: mecabl_development
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+test:
+  <<: *default
+  database: mecabl_test
+
+staging:
+  <<: *default
+  database: mecabl_staging
+  password: 
+  host: mecabl.ceofu8tvwb6d.ap-northeast-1.rds.amazonaws.com
+
+production:
+  <<: *default
+  database: mecabl_production
+  password: 
+  host: mecabl.ceofu8tvwb6d.ap-northeast-1.rds.amazonaws.com

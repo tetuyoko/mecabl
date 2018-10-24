@@ -1,0 +1,86 @@
+script src="/js/jquery-2.2.2.min.js"
+script src='/js/jquery.xdomainajax.js'
+script src='/js/Chart-2.1.3.js'
+script src='/js/chartdraw.js'
+  
+link rel="stylesheet" href="/css/train.css"
+
+- _tag_list = @entry.tag_list || ""
+= text = _tag_list.split(",").join(" ")
+- hash = Classifier.pretty_classifications(text)
+
+h3
+  | この記事のBL指数:
+  = @entry.bl_score
+
+script
+  |
+    var data = {
+      labels:  #{raw(hash.keys.to_json)},
+        datasets: [
+            {
+                label: "",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                pointBackgroundColor: "rgba(255,99,132,1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(255,99,132,1)",
+                data: #{raw(hash.values.map{|v|v.round(2)}.to_json)},
+            }
+        ]
+    };
+
+section style="margin: 0 auto;width:600px"
+  div
+    a href ="/"
+      image src="/image/logo.png" width="160"
+    - if flash[:notice]
+      span style="position: absolute;margin-top: 4px;margin-left: 5px;color: gray;"
+        |   < #{flash[:notice]}
+
+  div
+  p
+    = @entry.feed.try(:title)
+
+  div style="font-size: 8px;" 
+    = @entry.tag_list
+  
+  h2
+    = @entry.title
+  h4
+    = @entry.pretty_category
+
+  canvas id="Chart" height="220" width="600"
+
+  div 
+    | &#x261F; この記事の印象を選択!
+  - (CategoryRecord.categories).each do |c|
+    .item
+      form method="POST" action="/debug/classifier/#{@entry.id}/do"
+        input type="hidden" name="category" value="#{c[0]}"
+        button class="btn"  class="#{c[0]}"
+          | #{I18n.t('classifier.categories')[c[0].to_sym]}
+  p
+    == @entry.content
+  
+  h3
+    | OG:IMAGE
+  
+  #og_image
+    image width=400 src="#{@entry.image_url}"
+
+  hr
+
+  = @entry.pretty_category
+  - target = @entry.tag_list
+  div style='font-size: 12px;'
+    p 
+      | Entry ID: #{@entry.id}
+      br
+      | Score: #{Classifier.pretty_classifications(target)}
+
+  br
+  br
+  br
+

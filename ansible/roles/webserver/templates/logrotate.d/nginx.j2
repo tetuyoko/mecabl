@@ -1,0 +1,19 @@
+{{ log_directory }}/nginx_*.log {
+  daily
+  missingok
+  rotate 20
+  compress
+  notifempty
+  create 0640 {{ admin_user }} {{ admin_group }}
+  su  {{ admin_user }} {{ admin_group }}
+  sharedscripts
+  dateext
+  prerotate
+    if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+      run-parts /etc/logrotate.d/httpd-prerotate; \
+    fi \
+  endscript
+  postrotate
+    [ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`
+  endscript
+}
