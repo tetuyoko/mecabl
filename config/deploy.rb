@@ -1,7 +1,7 @@
 lock '3.4.0'
 
 set :application, 'mecabl'
-set :repo_url, 'git@github.com:mugenup/mecabl.git'
+set :repo_url, 'git@github.com:/mecabl.git'
 set :branch, 'master'
 set :deploy_to, "/var/www/#{fetch(:application)}"
 set :scm, :git
